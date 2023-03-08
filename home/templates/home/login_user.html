@@ -1,0 +1,59 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+    .login-wrapper{
+        display: flex;
+        height: 80vh;
+        align-items: center;
+        justify-content: center;
+    }
+    .form{
+        width: 600px;
+    }
+
+</style>
+<div class="container">
+    <div class="login-wrapper">
+
+        {% if page == 'login' %}
+        <form class="form" action="" method="POST">
+            <h3>Login </h3>
+            <hr />
+            <h5>Add your username and password to access your account.</h5>
+            {% csrf_token %}
+            <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Username</label>
+            <input type="text" class="form-control" name="username" id="exampleInputEmail1" aria-describedby="emailHelp">
+            </div>
+
+            <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Password</label>
+            <input type="password" class="form-control" name="password" id="exampleInputPassword1">
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+            <p>Don't have an account? <a href="{% url 'register' %}">Register</a></p>
+        </form>
+
+        {% else %}
+            <form action="" method="POST">
+                <h3>Register your account.</h3>
+                {% csrf_token %}
+
+                {% for field in form %}
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">{{ field.label }}</label>
+                    {{ field }}
+                </div>
+                {% endfor %}
+                <input type="submit" class="btn btn-primary" value="Register">
+                <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+            </form>
+        {% endif %}
+
+    </div>
+
+</div>
+
+  {% endblock %}
